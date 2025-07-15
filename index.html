@@ -1,390 +1,440 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Learn Quran with KakaReza</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background: linear-gradient(135deg, #0d2b47 60%, #96c6ff 100%);
-      color: #fff;
-      text-align: center;
-    }
-    .container {
-      max-width: 420px;
-      margin: auto;
-      padding: 18px;
-    }
-    .pulse-btn {
-      background: linear-gradient(90deg, #ffd700, #ff7100 80%);
-      color: #09304f;
-      border: none;
-      border-radius: 60px;
-      padding: 20px 24px;
-      margin: 18px 0 16px 0;
-      font-size: 1.19em;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-      animation: pulse 1.8s infinite;
-      transition: transform 0.13s;
-    }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 #ffd70080; transform: scale(1);}
-      50% {box-shadow: 0 0 16px 12px #ff710040; transform: scale(1.06);}
-    }
-    .button-secondary {
-      background-image: linear-gradient(90deg, #21d4fd 0%, #b721ff 85%);
-      color: #fff;
-      border: none;
-      border-radius: 32px;
-      padding: 16px 28px;
-      margin: 12px 0 10px 0;
-      font-size: 1.04em;
-      font-weight: bold;
-      cursor: pointer;
-      animation: pulse 1.8s infinite;
-      transition: background 0.2s;
-    }
-    .home-btn {
-      position: absolute;
-      top: 10px; left: 12px;
-      background: #fff;
-      color: #183153;
-      border-radius: 24px;
-      padding: 7px 18px;
-      border: none;
-      font-weight: bold;
-      font-size: 1em;
-      cursor: pointer;
-    }
-    .modal, .modal-back {
-      display: none; 
-      position: fixed; 
-      z-index: 12; 
-      left: 0; 
-      top: 0; 
-      width: 100%; 
-      height: 100%; 
-      overflow-y: auto;
-      background: rgba(13,43,71,0.88);
-    }
-    .modal-content {
-      margin: 48px auto 0 auto;
-      background: #fff;
-      color: #111;
-      padding: 28px 11px 12px 11px;
-      border-radius: 16px;
-      max-width: 95vw;
-      max-height: 90vh;
-      box-shadow: 0 6px 40px rgba(11,44,90,0.14);
-      position: relative;
-      text-align: left;
-    }
-    .close {
-      color: #ff7100;
-      position: absolute;
-      right: 14px; top: 12px;
-      font-size: 2em;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .verse-arabic {
-      font-family: 'Amiri', serif;
-      font-size: 1.4em;
-      color: #0d2b47;
-      text-align: right;
-      margin: 5px 0 12px 0;
-    }
-    .label {
-      font-weight: 700;
-      color: #183153;
-    }
-    .details-row {
-      margin-bottom: 7px;
-    }
-    hr {
-      border: none;
-      border-top: 2.5px solid #ffd700;
-      margin: 10px 0;
-    }
-    .trusted-link-box {
-      background: #eaf6ff;
-      color: #175185;
-      padding: 10px 12px;
-      border-radius: 11px;
-      margin-top: 17px;
-      margin-bottom: 6px;
-      font-size: 1em;
-      text-align: center;
-      border: 1.5px solid #bee0fa;
-      font-weight: 500;
-    }
-    .trusted-link-box a {
-      display:inline-block;
-      color: #185ef7;
-      font-weight: bold;
-      background: #deefff;
-      padding: 3px 13px 3px 13px;
-      border-radius: 7px;
-      text-decoration: none;
-      margin-top: 7px;
-      margin-bottom: 3px;
-    }
-    .trusted-link-box a:hover {
-      background: #b8e3ff;
-    }
-    .answer-input {
-      font-size: 1em;
-      padding: 7px;
-      margin-bottom: 3px;
-    }
-    .correct {
-      border: 2px solid #43df7c;
-      background: #eafff3;
-      animation: correct-flash 1s;
-    }
-    .incorrect {
-      border: 2px solid #ef3d58;
-      background: #ffeaea;
-      animation: wrong-flash 1s;
-    }
-    @keyframes correct-flash {
-      0% {background: #abf7cb;}
-      100% {background: #eafff3;}
-    }
-    @keyframes wrong-flash {
-      0% {background: #ffb2be;}
-      100% {background: #ffeaea;}
-    }
-    .quiz-btn {
-      margin-left: 7px;
-      background: #ffd700;
-      color: #222;
-      border: none;
-      padding: 7px 18px;
-      border-radius: 18px;
-      font-weight: bold;
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>KakaReza's Fun Quran Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%; width: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0d2b47 60%, #96c6ff 100%);
+    overflow: hidden;
+  }
+  #canvas {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #fff;
+  }
+  #fact-btn {
+    position: absolute;
+    top: 20px; right: 24px;
+    z-index: 8;
+    padding: 12px 25px;
+    background: linear-gradient(90deg, #21d4fd, #b721ff 85%);
+    color: #fff;
+    border: none;
+    border-radius: 32px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    animation: pulse 1.8s infinite;
+    box-shadow: 0 3px 15px rgba(13,43,71,0.1);
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 #ffd70080; transform: scale(1);}
+    50% {box-shadow: 0 0 10px 5px #ff710040; transform: scale(1.07);}
+  }
+  #home-btn {
+    position: absolute;
+    top: 20px; left: 24px;
+    z-index: 8;
+    padding: 12px 27px;
+    background: #fff;
+    color: #183153;
+    border-radius: 28px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 2px 12px rgba(13,43,71,0.10);
+    cursor: pointer;
+  }
+  #trusted-link {
+    position: absolute;
+    bottom: 26px;
+    left: 50%; transform: translateX(-50%);
+    z-index: 8;
+    background: #eaf6ff;
+    color: #175185;
+    padding: 9px 18px;
+    border-radius: 11px;
+    font-size: 1em;
+    text-align: center;
+    border: 1.5px solid #bee0fa;
+    font-weight: 500;
+  }
+  #modal {
+    font-size: 1.16em;
+    background: rgba(13,43,71,0.96);
+    position: fixed;
+    z-index: 20;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    display: none;
+    align-items: center; justify-content: center;
+  }
+  #modal-content {
+    background: #fff;
+    color: #193452;
+    border-radius: 14px;
+    padding: 25px 24px;
+    min-width: 200px;
+    min-height: 60px;
+    max-width: 90vw;
+    max-height: 88vh;
+    box-shadow: 0 6px 39px rgba(13,43,71,0.22);
+    font-size: 1.09em;
+    overflow-y: auto;
+  }
+  #modal-close {
+    color: #b721ff;
+    float: right;
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: -17px;
+    margin-right: -7px;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
-<div class="container">
-
-  <button class="home-btn" onclick="showHome()">Home</button>
-
-  <h1 style="font-size:2em;margin-bottom:0;">Learn Quran <span style="color:#ffd700;">with KakaReza</span></h1>
-  <div id="homeView">
-
-    <button class="pulse-btn" onclick="openModal('search')">What does the Holy Quran say about...?</button>
-    <br>
-    <button class="button-secondary" onclick="openModal('fact')">Tell me an interesting fact from the Quran</button>
-    <br>
-    <button class="button-secondary" onclick="openModal('find')">Find me verse about...</button>
-    <br>
-    <button class="button-secondary" onclick="startQuiz()">Quran Quiz!</button>
+<canvas id="canvas"></canvas>
+<button id="fact-btn" onclick="showFact()">Tell me a Quran Fact</button>
+<button id="home-btn" style="display:none;" onclick="restartQuiz()">Home</button>
+<div id="trusted-link">
+  For detailed study, visit <a href="https://quran.com/en/search" target="_blank" style="color:#185ef7">Quran.com</a>
+</div>
+<div id="modal">
+  <div id="modal-content">
+    <span id="modal-close" onclick="closeModal()">&times;</span>
+    <div id="modal-body"></div>
   </div>
-
-  <!-- Modal windows -->
-  <div class="modal" id="modal">
-    <div class="modal-content" id="modalContent">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <!-- Modal dynamic contents go here -->
-    </div>
-  </div>
-
 </div>
 <script>
-const demoVerses = {
-  patience: {
-    arabic: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",
-    english: "Indeed, Allah is with the patient.",
-    ref: "Al-Baqarah 2:153",
-    when: "Revealed early in Madinah, after hardship faced by Muslims.",
-    what: "This verse encourages patience and steadfastness during trials.",
-    why: "To give hope and spiritual strength to Muslims facing persecution.",
-    how: "Inspired Muslims to persevere in spreading Islam then; today, a source of comfort in challenges.",
-    impact: "Remains a source of resilience for believers worldwide."
-  },
-  charity: {
-    arabic: "الَّذِينَ يُنفِقُونَ أَمْوَالَهُم بِاللَّيْلِ وَالنَّهَارِ",
-    english: "Those who spend their wealth by night and by day...",
-    ref: "Al-Baqarah 2:274",
-    when: "Revealed in Madinah during community building.",
-    what: "Stresses giving charity anytime, publicly or privately.",
-    why: "To motivate continuous generosity.",
-    how: "Encouraged an ethos of giving and equality.",
-    impact: "Charity remains vital in Muslim society."
-  },
-  mercy: {
-    arabic: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ",
-    english: "My Mercy encompasses all things.",
-    ref: "Al-A'raf 7:156",
-    when: "Revealed in Mecca in a period of adversity.",
-    what: "Declares God's vast and inclusive mercy.",
-    why: "To reassure the Prophet and believers.",
-    how: "Source of forgiveness then and now.",
-    impact: "Muslims are encouraged to hope for God's mercy."
-  }
-};
-const demoFacts = [
-  "Did you know? The Quran mentions honey as a healing remedy (16:69).",
-  "Mary (Maryam) is the only woman named by name in the Quran (Surah 19).",
-  "The Quran mentions the Big Bang: 'The heavens and the earth were a joined entity...' (21:30).",
-  "The Quran emphasizes seeking knowledge repeatedly.",
-  "Ants communicate - referenced in Surah An-Naml (27:18-19)."
-];
-let factSeenIndices = [];
-const quiz = [
-  {q: "How many surahs are in the Quran?", a: "114"},
+// ---- Quiz Data ----
+const questions = [
+  {q: "How many surahs are there in the Quran?", a: "114"},
+  {q: "Which Surah is the longest?", a: "Al-Baqarah"},
   {q: "Which Surah is called the 'Heart of the Quran'?", a: "Yasin"},
+  {q: "Who is the last Prophet mentioned in the Quran?", a: "Muhammad"},
   {q: "Which Prophet is mentioned most in the Quran?", a: "Moses"},
-  {q: "What is the first word revealed in Quran?", a: "Read"},
-  {q: "Which surah is the longest?", a: "Al-Baqarah"}
+  {q: "What is the first word revealed in the Quran?", a: "Read"},
+  {q: "How many juz (sections) are in the Quran?", a: "30"},
+  {q: "What is the mother of the Book (Ummul-Kitab)?", a: "Al-Fatiha"},
+  {q: "Which angel delivered revelation to Prophet Muhammad?", a: "Jibril"},
+  {q: "What is the night when the Quran was first revealed called?", a: "Laylatul Qadr"},
+  {q: "Which city was the Prophet in when most Meccan surahs were revealed?", a: "Mecca"},
+  {q: "Which surah contains the verse of the Throne (Ayatul Kursi)?", a: "Al-Baqarah"},
+  {q: "Name the only woman mentioned by name in the Quran.", a: "Maryam"},
+  {q: "Which surah has no 'Bismillah' at its start?", a: "At-Tawbah"},
+  {q: "What food does Allah mention as healing in Surah An-Nahl?", a: "Honey"}
 ];
-function openModal(type){
-  const modal = document.getElementById('modal');
-  const content = document.getElementById('modalContent');
-  modal.style.display = 'block';
-  if(type === 'search'){
-    content.innerHTML = `
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2>What does the Quran say about...</h2>
-      <input id="searchInput" style="width:85%;" placeholder="Type a topic (e.g. patience)">
-      <button class="quiz-btn" onclick="searchTopic()">Search</button>
-      <div id="searchResult"></div>
-      <div class="trusted-link-box">For detailed study, visit <a href="https://quran.com/en/search" target="_blank" rel="noopener">Quran.com</a> (trusted worldwide) for all topics and translations.</div>
-    `;
-  } else if(type === 'fact') {
-    let idx;
-    if (factSeenIndices.length === demoFacts.length) factSeenIndices = [];
-    do { idx = Math.floor(Math.random()*demoFacts.length);}
-    while(factSeenIndices.includes(idx));
-    factSeenIndices.push(idx);
-    content.innerHTML = `
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2>Quran Fact</h2>
-      <div style="color: #333; font-size: 1.1em; margin:24px 0 12px 0;">${demoFacts[idx]}</div>
-      <div class="trusted-link-box">Explore more facts on <a href="https://quran.com/" target="_blank" rel="noopener">Quran.com</a></div>
-    `;
-  } else if(type==='find') {
-    content.innerHTML = `
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2>Find me verse about...</h2>
-      <input id="findInput" style="width:85%;" placeholder="Type a keyword">
-      <button class="quiz-btn" onclick="findVerse()">Find</button>
-      <div id="findResult"></div>
-      <div class="trusted-link-box">Can’t find your topic? Try searching on <a href="https://quran.com/en/search" target="_blank" rel="noopener">Quran.com</a> for authentic results.</div>
-    `;
-  }
+
+// --- Fun Facts ---
+const facts = [
+  "Bees, ants, and spiders are the only insects with entire surahs named after them.",
+  "Maryam (Mary) is the only woman mentioned by name in the Quran.",
+  "The verse with the word 'light' (nur) most times is in Surah An-Nur.",
+  "The Quran mentions honey as a healing remedy in Surah An-Nahl (16:69).",
+  "Some verses were revealed in response to direct questions from people.",
+  "Surah Al-Kawthar is the shortest surah with only 3 verses.",
+  "The Quran encourages reflecting on creation as a sign of God."
+];
+let usedFacts = [];
+
+// Quiz State
+let currQ = 0, totalQ = 15;
+let quizOrder = [];
+let userAnswers = [];
+let quizEnded = false;
+
+// Canvas setup
+let c = document.getElementById('canvas');
+let ctx = c.getContext('2d');
+
+// Responsive Size
+function resizeCanvas() {
+  c.width = window.innerWidth;
+  c.height = window.innerHeight;
+  if (!quizEnded) drawQuiz();
 }
-function closeModal(){ document.getElementById('modal').style.display = 'none'; }
-function showHome(){ closeModal(); document.getElementById('homeView').style.display = ''; }
-function searchTopic(){
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  let resultContainer = document.getElementById('searchResult');
-  if (!q) { resultContainer.innerHTML = '<i>Please enter a topic...</i>'; return;}
-  let v = null;
-  for (let k in demoVerses) if (q.includes(k)) v = demoVerses[k];
-  if (!v) { 
-    resultContainer.innerHTML = `<b>No concise result in demo data. Try: patience, charity, or mercy.</b>
-    <div class="trusted-link-box">For more, search <a href="https://quran.com/en/search?q=${encodeURIComponent(q)}" target="_blank" rel="noopener">Quran.com</a></div>`;
+window.onresize = resizeCanvas;
+
+// Drawing Helpers
+function clear() {
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0,0,c.width,c.height);
+}
+
+function drawBtn(x, y, w, h, text, highlighted=false) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.shadowColor = "#b8e3ff";
+  ctx.shadowBlur = 16;
+  ctx.roundRect(x, y, w, h, 16);
+  ctx.fillStyle = highlighted ? "#ffd700" : "linear-gradient(90deg,#ffd700,#ff7100 80%)";
+  ctx.fillStyle = highlighted ? "#ffd700" : "#21d4fd";
+  ctx.globalAlpha = 0.98;
+  ctx.fill();
+  ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+  ctx.font = "bold 1.5em Arial";
+  ctx.fillStyle = highlighted ? "#333":"#fff";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, x+w/2, y+h/2);
+  ctx.restore();
+}
+
+function drawQuiz() {
+  clear();
+  if (quizEnded) {
+    drawResults();
     return;
   }
-  resultContainer.innerHTML = renderVerseDetails(v) + `
-    <div class="trusted-link-box" style="margin-top:18px;">For more on this topic, see <a href="https://quran.com/en/search?q=${encodeURIComponent(q)}" target="_blank" rel="noopener">Quran.com</a></div>`;
+  // Layout
+  let margin = Math.max(20, c.width * 0.02);
+  let boxW = Math.min(600, c.width - 2*margin);
+  let boxH = Math.min(260, c.height - 2*margin - 160);
+  let boxY = c.height/2 - boxH/2 - 40;
+  
+  // Box
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect((c.width-boxW)/2, boxY, boxW, boxH, 25);
+  ctx.fillStyle = "#eaf6ff";
+  ctx.shadowColor = "#c6e7fb";
+  ctx.shadowBlur = 26;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Title
+  ctx.font = "bold 2.2em Arial";
+  ctx.fillStyle = "#0d2b47";
+  ctx.textAlign = "center";
+  ctx.fillText("Quran Quiz", c.width/2, boxY+48);
+
+  // Question #
+  ctx.font = "1.05em Arial";
+  ctx.fillStyle = "#1b2c5c";
+  ctx.fillText("Question " + (currQ+1) + " of " + totalQ, c.width/2, boxY+94);
+
+  // Question text
+  ctx.font = "bold 1.55em Arial";
+  ctx.fillStyle = "#193452";
+  wrapText(ctx, questions[quizOrder[currQ]].q, c.width/2, boxY+142, boxW-30, 42);
+
+  // Input box
+  let inputY = boxY+boxH-70;
+  let inputH = 54;
+  ctx.beginPath();
+  ctx.roundRect(c.width/2-170, inputY, 340, inputH, 13);
+  ctx.fillStyle = "#fff";
+  ctx.fill();
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "#b721ff";
+  ctx.stroke();
+
+  ctx.font = "1.3em Arial";
+  ctx.fillStyle = "#333";
+  ctx.textAlign = "left";
+  ctx.fillText(userAnswers[currQ]!==undefined ? userAnswers[currQ] : '', c.width/2-150, inputY+inputH/2+7);
+
+  // Next button
+  drawBtn(c.width/2-77, inputY+inputH+28, 154, 58, "Next →", false);
+  ctx.restore();
 }
-function findVerse(){
-  const q = document.getElementById('findInput').value.trim().toLowerCase();
-  let result = null;
-  for (let k in demoVerses) if (q.includes(k)) result = demoVerses[k];
-  let resultContainer = document.getElementById('findResult');
-  if (!result){
-    resultContainer.innerHTML = `<b>Sorry, nothing found in demo data. Try patience, mercy, charity for demo.</b>
-      <div class="trusted-link-box">To search all topics, go to <a href="https://quran.com/en/search?q=${encodeURIComponent(q)}" target="_blank" rel="noopener">Quran.com</a></div>`;
+
+// Helper to wrap text in canvas
+function wrapText(ctx, txt, x, y, maxW, lineH) {
+  let words = txt.split(' ');
+  let line = '', cy = y;
+  ctx.textAlign="center";
+  for(let i=0; i<words.length; ++i){
+    let test = line + words[i] + ' ';
+    let m = ctx.measureText(test);
+    if (m.width > maxW && i>0){
+      ctx.fillText(line, x, cy);
+      line = words[i] + ' ';
+      cy += lineH;
+    } else {
+      line = test;
+    }
+  }
+  ctx.fillText(line, x, cy);
+}
+
+// ---- Input Handlers ----
+
+let inputActive = true;
+let currentInput = '';
+document.addEventListener('keydown', function(e){
+  if (!inputActive || quizEnded) return;
+  if (e.key === "Backspace"){
+    e.preventDefault();
+    if(currentInput.length>0) currentInput = currentInput.slice(0,-1);
+  } else if (e.key.length === 1 && currentInput.length < 32) {
+    currentInput += e.key;
+  } else if (e.key === "Enter") {
+    submitInput();
     return;
   }
-  resultContainer.innerHTML = renderVerseDetails(result)+`
-    <div class="trusted-link-box" style="margin-top:18px;">Find this and more on <a href="https://quran.com/en/search?q=${encodeURIComponent(q)}" target="_blank" rel="noopener">Quran.com</a></div>`;
-}
-function renderVerseDetails(verse){
-  const today = new Date();
-  const dateStr = today.toLocaleDateString('en-US', {year:'numeric', month:'short', day:'numeric'});
-  return `
-    <hr>
-    <div class="details-row"><span class="label">Date:</span> ${dateStr}</div>
-    <div class="details-row"><span class="label">Verse Reference:</span> ${verse.ref}</div>
-    <div class="verse-arabic">${verse.arabic}</div>
-    <div style="font-size:1.13em;margin-bottom:7px;"><b>English:</b> ${verse.english}</div>
-    <hr>
-    <div><span class="label">What:</span> ${verse.what}</div>
-    <div><span class="label">Why:</span> ${verse.why}</div>
-    <div><span class="label">How/Impact:</span> ${verse.how}</div>
-    <div><span class="label">Context:</span> ${verse.when}</div>
-  `;
-}
-let quizIndices = [];
-let quizScore = 0;
-let quizCurrent = 0;
-function startQuiz(){
-  quizIndices = shuffle([...Array(quiz.length).keys()]);
-  quizScore = 0; quizCurrent = 0;
-  showQuizQ();
-}
-function showQuizQ(){
-  if (quizCurrent >= 5) {
-    document.getElementById('modalContent').innerHTML = `<h2>Your Score: ${quizScore} / 5</h2>
-      <button class="quiz-btn" onclick="startQuiz()">Play Again</button>
-      <br><button class="quiz-btn" onclick="closeModal()">Done</button>
-      <div class="trusted-link-box" style="margin-top:18px;">Learn more on <a href="https://quran.com/" target="_blank" rel="noopener">Quran.com</a></div>
-      `;
-    document.getElementById('modal').style.display = 'block';
-    return;
-  }
-  const idx = quizIndices[quizCurrent];
-  document.getElementById('modal').style.display = 'block';
-  document.getElementById('modalContent').innerHTML = `
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h2>Quiz: Question ${quizCurrent+1} of 5</h2>
-    <div style="margin:12px 0 7px 0;">${quiz[idx].q}</div>
-    <input class="answer-input" id="quizInput" autofocus placeholder="Your answer">
-    <button class="quiz-btn" onclick="quizCheck()">Submit</button>
-    <div id="quizFeedback"></div>
-    <div class="trusted-link-box">Find answers and more at <a href="https://quran.com/" target="_blank" rel="noopener">Quran.com</a></div>
-  `;
-}
-function quizCheck(){
-  const idx = quizIndices[quizCurrent];
-  const input = document.getElementById('quizInput');
-  let val = input.value.trim().toLowerCase();
-  let answer = quiz[idx].a.toLowerCase();
-  let isCorrect = val === answer || (answer === 'read' && val.startsWith('read')) ||
-                  (answer==='moses' && (val.includes('moses')||val.includes('musa')));
-  const quizFeedback = document.getElementById('quizFeedback');
-  if(isCorrect){
-    input.classList.add('correct');
-    quizFeedback.innerHTML = '<span style="color:#21ae4c;">Correct!</span>';
-    quizScore++;
+  userAnswers[currQ]=currentInput;
+  drawQuiz();
+});
+
+c.addEventListener('mousedown', function(e){
+  if (quizEnded) return;
+  // Check if "Next" button pressed
+  let r = getBtnRect();
+  let mx = e.clientX, my = e.clientY;
+  if (mx>r.x && mx<r.x+r.w && my>r.y && my<r.y+r.h){
+    submitInput();
   } else {
-    input.classList.add('incorrect');
-    quizFeedback.innerHTML = `<span style="color:#ef3d58;">✗ Wrong! Correct: ${quiz[idx].a}</span>`;
+    inputActive = true;
   }
-  input.disabled = true;
-  setTimeout(()=>{
-    quizCurrent++; showQuizQ();
-  },1000);
+});
+
+function getBtnRect(){
+  let inputY = c.height/2 + Math.min(130, (Math.min(260, c.height - c.width*0.13)-70)/2 );
+  let btnY = inputY+54+28;
+  return {x:c.width/2-77, y:btnY, w:154, h:58};
 }
-function shuffle(arr){
-  for(let i=arr.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
+
+function submitInput(){
+  if (!userAnswers[currQ] || userAnswers[currQ].trim()==='') {
+    currentInput = '';
+    inputActive = true;
+    drawQuiz();
+    return;
   }
-  return arr.slice(0,5);
+  currentInput = '';
+  inputActive = true;
+  currQ++;
+  if(currQ >= totalQ){
+    quizEnded = true;
+    setTimeout(() => {drawQuiz(); document.getElementById('home-btn').style.display='block'}, 320);
+  } else {
+    drawQuiz();
+  }
+}
+
+// ---- Drawing Results ----
+function drawResults(){
+  clear();
+  // Score
+  let correctCount = 0;
+  let boxTop = 64;
+  let qtY = boxTop+46;
+
+  ctx.save();
+  ctx.font = "bold 2.3em Arial";
+  ctx.fillStyle = "#21ae4c";
+  ctx.textAlign = "center";
+  ctx.fillText("Quiz Results", c.width/2, boxTop);
+  ctx.font = "1.5em Arial";
+  for(let i=0; i<totalQ; ++i){
+    let idx = quizOrder[i];
+    let uq = userAnswers[i]? userAnswers[i].trim() : '';
+    let correct = isCorrect(uq, questions[idx].a);
+    if(correct) correctCount++;
+  }
+  ctx.fillStyle = "#0d2b47";
+  ctx.fillText("You scored "+correctCount+" / "+totalQ, c.width/2, boxTop+48);
+
+  // Message
+  ctx.font = "1.23em Arial";
+  let msgY = boxTop+84;
+  if (correctCount >= 13) {
+    ctx.fillStyle = "#23ae61";
+    ctx.fillText("Good job! 🏆", c.width/2, msgY);
+  } else if ((totalQ-correctCount) === 2) {
+    ctx.fillStyle = "#ffd700";
+    ctx.fillText("Kaka will pray for you 🙏", c.width/2, msgY);
+  } else {
+    ctx.fillStyle = "#e24c44";
+    ctx.fillText("Try again for a better score!", c.width/2, msgY);
+  }
+
+  // Questions List
+  ctx.font = "1.07em Arial";
+  ctx.textAlign = "left";
+  let lX1 = c.width/2-Math.min(420, c.width/2-32);
+  let y = qtY+60;
+  for(let i=0; i<totalQ; ++i){
+    let idx = quizOrder[i];
+    ctx.font = "bold 1.05em Arial";
+    ctx.fillStyle = "#164d8b";
+    ctx.fillText((i+1)+". "+questions[idx].q, lX1, y);
+
+    let uq = userAnswers[i]? userAnswers[i].trim() : '';
+    let correct = isCorrect(uq, questions[idx].a);
+    ctx.font = "1.07em Arial";
+    ctx.fillStyle = correct ? "#2ea85d" : "#cc2b2b";
+    let uaMsg = "Your answer: " +(uq?uq:"[no answer]");
+    if (!correct) uaMsg += " 🤦‍♂️";
+    ctx.fillText(uaMsg, lX1+17, y+23);
+
+    ctx.fillStyle = "#193452";
+    ctx.font = "italic 1.02em Arial";
+    ctx.fillText("Correct: "+questions[idx].a, lX1+17, y+43);
+    y += 62;
+    if(y > c.height-78){
+      // paginates if too long, you can rework to scroll or paginate for very small screens
+      break;
+    }
+  }
+  ctx.restore();
+}
+function isCorrect(given, ans){
+  if(!given) return false;
+  given = given.trim().toLowerCase();
+  ans = ans.trim().toLowerCase();
+  if(given===ans) return true;
+  if (ans==='maryam' && given.includes('mary')) return true;
+  if (ans==='jibril' && (given.includes('jibril')||given.includes('gabriel'))) return true;
+  if (ans==='moses' && (given.includes('moses')||given.includes('musa'))) return true;
+  if(ans==='read' && given.startsWith('read')) return true;
+  return false;
+}
+
+function restartQuiz(){
+  initQuiz();
+  document.getElementById('home-btn').style.display='none';
+}
+
+// ---- Modal (Fact) ----
+function showFact(){
+  let options = facts.filter((_, i)=>!usedFacts.includes(i));
+  if(options.length===0) usedFacts=[];
+  let availIdx = facts.map((_,i)=>usedFacts.includes(i)?-1:i).filter(idx=>idx!==-1);
+  let idx = availIdx[Math.floor(Math.random()*availIdx.length)];
+  usedFacts.push(idx);
+  document.getElementById('modal').style.display="flex";
+  document.getElementById('modal-body').innerHTML = `
+    <b>Quran Fact:</b><br><br>${facts[idx]}
+    <br><br><a href="https://quran.com/" target="_blank" style="color:#185ef7;font-weight:bold;">See more at Quran.com</a>
+  `;
+}
+function closeModal(){
+  document.getElementById('modal').style.display="none";
+}
+
+function initQuiz(){
+  currQ=0;
+  userAnswers = [];
+  currentInput = '';
+  quizEnded=false;
+  quizOrder = [];
+  let arr = [];
+  for(let i=0;i<questions.length;i++) arr.push(i);
+  quizOrder = arr.sort(()=>Math.random()-0.5).slice(0, totalQ);
+  resizeCanvas();
+}
+
+window.onload = function(){
+  resizeCanvas();
+  initQuiz();
 }
 </script>
 </body>
 </html>
-
